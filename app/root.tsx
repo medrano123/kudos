@@ -1,11 +1,21 @@
-import {
-  Links,
-  LiveReload,
-  Meta,
-  Outlet,
-  Scripts,
-  ScrollRestoration,
-} from "@remix-run/react";
+import { Links, LiveReload, Meta, Outlet, Scripts, ScrollRestoration } from "@remix-run/react";
+
+
+// ./app/root.tsx
+// 1
+import type { MetaFunction, LinksFunction } from "@remix-run/node";
+
+// 2
+import styles from './styles/app.css';
+
+// ...
+
+// 3
+export const links: LinksFunction = () => {
+  return [{ rel: 'stylesheet', href: styles }]
+}
+
+// ...
 
 export default function App() {
   return (
