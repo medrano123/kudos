@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../../app/routes/_index.tsx"],
-  "sourcesContent": ["import type { V2_MetaFunction } from \"@remix-run/react\";\nimport type { LoaderFunction } from '@remix-run/node'\nimport { requireUserId } from '~/utils/auth.server'\nimport { redirect, json, createCookieSessionStorage } from '@remix-run/node'\n\n\nexport const loader: LoaderFunction = async ({ request }) => {\n\ttry {\n\t  await requireUserId(request);\n\t  return null;\n\t} catch (err) {\n\t  const redirectTo = new URL(request.url).pathname;\n\t  const searchParams = new URLSearchParams([['redirectTo', redirectTo]]);\n\t  return redirect(`/login?${searchParams}`);\n\t}\n  };\n  \n\nexport default function Index() {\n  \treturn (\n\t\t<div className=\"h-screen bg-slate-700 flex justify-center items-center\">\n\t\t\t<h2 className=\"text-blue-600 font-extrabold text-5xl\">TailwindCSS Is Working!</h2>\n  \t\t</div>\n  \t);\n}\n"],
-  "mappings": ";;;;;;;;;;;AAEA,kBAA8B;AAmB3B;AAHY,SAAR,QAAyB;AAC7B,SACD,mDAAC,SAAI,WAAU,0DACd,6DAAC,QAAG,WAAU,yCAAwC,uCAAtD;AAAA;AAAA;AAAA;AAAA,SAA6E,KAD9E;AAAA;AAAA;AAAA;AAAA,SAEE;AAEJ;",
-  "names": []
-}

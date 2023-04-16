@@ -1,5 +1,5 @@
 import { formMethodWarning } from '@remix-run/dev/dist/config';
-import { redirect, json, createCookieSessionStorage } from '@remix-run/node'
+import { json, createCookieSessionStorage, redirect } from "@remix-run/node";
 import { prisma } from './prisma.server';
 import bcrypt from 'bcryptjs'
 
@@ -94,7 +94,20 @@ export async function requireUserId(request: Request, redirectTo: string = new U
     }
     return userId
   }
-
+  
+//   export async function requireUserId(request: Request, redirectTo: string = new URL(request.url).pathname) {
+//     const session = await getUserSession(request)
+//     const userId = session.get('userId')
+//     if (!userId || typeof userId !== 'string') {
+//       if (redirectTo === '/login') {
+//         return null; // or return an empty string, depending on what you prefer
+//       }
+//       const searchParams = new URLSearchParams([['redirectTo', redirectTo]])
+//       throw redirect(`/login?${searchParams}`)
+//     }
+//     return userId
+//   }
+  
 function getUserSession(request: Request) {
     return storage.getSession(request.headers.get('Cookie'))
 }
