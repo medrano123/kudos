@@ -148,7 +148,7 @@ __export(root_exports, {
 var import_react2 = require("@remix-run/react");
 
 // app/styles/app.css
-var app_default = "/build/_assets/app-HNQYDAJS.css";
+var app_default = "/build/_assets/app-FGEU5SM5.css";
 
 // app/root.tsx
 var import_jsx_dev_runtime2 = require("react/jsx-dev-runtime"), links = () => [{ rel: "stylesheet", href: app_default }];
@@ -258,7 +258,18 @@ var createUser = async (user) => {
   where: {
     id: userId
   }
-});
+}), updateUser = async (userId, profile) => {
+  await prisma.user.update({
+    where: {
+      id: userId
+    },
+    data: {
+      profile: {
+        update: profile
+      }
+    }
+  });
+};
 
 // app/utils/auth.server.ts
 var sessionSecret = process.env.SESSION_SECRET;
@@ -453,22 +464,22 @@ var validateEmail = (email) => {
 
 // app/routes/login.tsx
 var import_jsx_dev_runtime6 = require("react/jsx-dev-runtime"), loader3 = async ({ request }) => await getUser(request) ? (0, import_node5.redirect)("/") : null, action2 = async ({ request }) => {
-  let form = await request.formData(), action4 = form.get("_action"), email = form.get("email"), password = form.get("password"), firstName = form.get("firstName"), lastName = form.get("lastName");
-  if (typeof action4 != "string" || typeof email != "string" || typeof password != "string")
-    return (0, import_node5.json)({ error: "Invalid Form Data1", form: action4 }, { status: 400 });
-  if (action4 === "register" && (typeof firstName != "string" || typeof lastName != "string"))
-    return (0, import_node5.json)({ error: "Invalid Form Data2", form: action4 }, { status: 400 });
+  let form = await request.formData(), action5 = form.get("_action"), email = form.get("email"), password = form.get("password"), firstName = form.get("firstName"), lastName = form.get("lastName");
+  if (typeof action5 != "string" || typeof email != "string" || typeof password != "string")
+    return (0, import_node5.json)({ error: "Invalid Form Data1", form: action5 }, { status: 400 });
+  if (action5 === "register" && (typeof firstName != "string" || typeof lastName != "string"))
+    return (0, import_node5.json)({ error: "Invalid Form Data2", form: action5 }, { status: 400 });
   let errors = {
     email: validateEmail(email),
     password: validatePassword(password),
-    ...action4 === "register" ? {
+    ...action5 === "register" ? {
       firstName: validateName(firstName || ""),
       lastName: validateName(lastName || "")
     } : {}
   };
   if (Object.values(errors).some(Boolean))
-    return (0, import_node5.json)({ errors, fields: { email, password, firstName, lastName }, form: action4 }, { status: 400 });
-  switch (action4) {
+    return (0, import_node5.json)({ errors, fields: { email, password, firstName, lastName }, form: action5 }, { status: 400 });
+  switch (action5) {
     case "login":
       return await login({ email, password });
     case "register":
@@ -479,7 +490,7 @@ var import_jsx_dev_runtime6 = require("react/jsx-dev-runtime"), loader3 = async 
 };
 function Login() {
   var _a, _b, _c, _d;
-  let actionData = (0, import_react5.useActionData)(), [formError, setFormError] = (0, import_react4.useState)((actionData == null ? void 0 : actionData.error) || ""), [errors, setErrors] = (0, import_react4.useState)((actionData == null ? void 0 : actionData.errors) || {}), firstLoad = (0, import_react4.useRef)(!0), [action4, setAction] = (0, import_react4.useState)("login"), [formData, setFormData] = (0, import_react4.useState)({
+  let actionData = (0, import_react5.useActionData)(), [formError, setFormError] = (0, import_react4.useState)((actionData == null ? void 0 : actionData.error) || ""), [errors, setErrors] = (0, import_react4.useState)((actionData == null ? void 0 : actionData.errors) || {}), firstLoad = (0, import_react4.useRef)(!0), [action5, setAction] = (0, import_react4.useState)("login"), [formData, setFormData] = (0, import_react4.useState)({
     email: ((_a = actionData == null ? void 0 : actionData.fields) == null ? void 0 : _a.email) || "",
     password: ((_b = actionData == null ? void 0 : actionData.fields) == null ? void 0 : _b.password) || "",
     firstName: ((_c = actionData == null ? void 0 : actionData.fields) == null ? void 0 : _c.lastName) || "",
@@ -500,7 +511,7 @@ function Login() {
       };
       setErrors(newState), setFormError(""), setFormData(newState);
     }
-  }, [action4]), (0, import_react4.useEffect)(() => {
+  }, [action5]), (0, import_react4.useEffect)(() => {
     firstLoad.current || setFormError("");
   }, [formData]), (0, import_react4.useEffect)(() => {
     firstLoad.current = !1;
@@ -510,7 +521,7 @@ function Login() {
       lineNumber: 117,
       columnNumber: 17
     }, this),
-    /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("p", { className: "font-black text-2xl text-secondary", children: action4 ? "Login to give some praise!" : "Sign up to get started" }, void 0, !1, {
+    /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)("p", { className: "font-black text-2xl text-secondary", children: action5 ? "Login to give some praise!" : "Sign up to get started" }, void 0, !1, {
       fileName: "app/routes/login.tsx",
       lineNumber: 120,
       columnNumber: 17
@@ -518,9 +529,9 @@ function Login() {
     /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(
       "button",
       {
-        onClick: () => setAction(action4 == "login" ? "register" : "login"),
+        onClick: () => setAction(action5 == "login" ? "register" : "login"),
         className: " text-secondary text-sm font-extrabold ",
-        children: action4 === "login" ? "Sign Up" : "Already have an account? Sign In"
+        children: action5 === "login" ? "Sign Up" : "Already have an account? Sign In"
       },
       void 0,
       !1,
@@ -577,7 +588,7 @@ function Login() {
           },
           this
         ),
-        action4 !== "login" ? /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_jsx_dev_runtime6.Fragment, { children: [
+        action5 !== "login" ? /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(import_jsx_dev_runtime6.Fragment, { children: [
           /* @__PURE__ */ (0, import_jsx_dev_runtime6.jsxDEV)(
             FormField,
             {
@@ -626,9 +637,9 @@ function Login() {
           {
             type: "submit",
             name: "_action",
-            value: action4,
+            value: action5,
             className: "rounded-xl mt-2 bg-tertiary px-3 py-2 text-[#915eff] font-black transition duration-300 ease-in-out hover:bg-[#fdsf3] hover:-translate-y-1",
-            children: action4 === "login" ? "Sign In" : "Sign Up"
+            children: action5 === "login" ? "Sign In" : "Sign Up"
           },
           void 0,
           !1,
@@ -674,15 +685,15 @@ var import_node6 = require("@remix-run/node"), import_react8 = require("@remix-r
 
 // app/components/User-Circle.tsx
 var import_jsx_dev_runtime7 = require("react/jsx-dev-runtime");
-function UserCircle({ profile: profile2, onClick, className }) {
+function UserCircle({ profile, onClick, className }) {
   return /* @__PURE__ */ (0, import_jsx_dev_runtime7.jsxDEV)(
     "div",
     {
       className: `${className} cursor-pointer bg-gray-600 rounded-full flex justify-center items-center`,
       onClick,
       children: /* @__PURE__ */ (0, import_jsx_dev_runtime7.jsxDEV)("h2", { children: [
-        profile2.firstName.charAt(0).toUpperCase(),
-        profile2.lastName.charAt(0).toUpperCase()
+        profile.firstName.charAt(0).toUpperCase(),
+        profile.lastName.charAt(0).toUpperCase()
       ] }, void 0, !0, {
         fileName: "app/components/User-Circle.tsx",
         lineNumber: 16,
@@ -734,6 +745,11 @@ var colorMap = {
     name: "Emoji",
     value: "emoji"
   }
+], departments = [
+  { name: "HR", value: "HR" },
+  { name: "Engineering", value: "ENGINEERING" },
+  { name: "Sales", value: "SALES" },
+  { name: "Marketing", value: "MARKETING" }
 ];
 
 // app/components/RecentBar.tsx
@@ -869,9 +885,6 @@ var createKudo = async (message, userId, recipientId, style) => {
         profile: !0
       }
     }
-  },
-  orderBy: {
-    ...sortFilter
   }
 }), getRecentKudos = async () => await prisma.kudo.findMany({
   take: 3,
@@ -895,14 +908,14 @@ var createKudo = async (message, userId, recipientId, style) => {
 
 // app/components/Kudo.tsx
 var import_jsx_dev_runtime10 = require("react/jsx-dev-runtime");
-function Kudo({ profile: profile2, kudo }) {
+function Kudo({ profile, kudo }) {
   var _a, _b, _c, _d;
   return /* @__PURE__ */ (0, import_jsx_dev_runtime10.jsxDEV)(
     "div",
     {
       className: `flex ${backgroundColorMap[((_a = kudo.style) == null ? void 0 : _a.backgroundColor) || "BLACK"]} p-4 rounded-xl w-full gap-x-2 relative`,
       children: [
-        /* @__PURE__ */ (0, import_jsx_dev_runtime10.jsxDEV)("div", { children: /* @__PURE__ */ (0, import_jsx_dev_runtime10.jsxDEV)(UserCircle, { profile: profile2, className: "h-16 w-16" }, void 0, !1, {
+        /* @__PURE__ */ (0, import_jsx_dev_runtime10.jsxDEV)("div", { children: /* @__PURE__ */ (0, import_jsx_dev_runtime10.jsxDEV)(UserCircle, { profile, className: "h-16 w-16" }, void 0, !1, {
           fileName: "app/components/Kudo.tsx",
           lineNumber: 16,
           columnNumber: 17
@@ -913,9 +926,9 @@ function Kudo({ profile: profile2, kudo }) {
         }, this),
         /* @__PURE__ */ (0, import_jsx_dev_runtime10.jsxDEV)("div", { className: "flex flex-col", children: [
           /* @__PURE__ */ (0, import_jsx_dev_runtime10.jsxDEV)("p", { className: `${colorMap[((_b = kudo.style) == null ? void 0 : _b.textColor) || "PURPLE"]} font-bold text-lg whitespace-pre-wrap break-all`, children: [
-            profile2.firstName,
+            profile.firstName,
             " ",
-            profile2.lastName
+            profile.lastName
           ] }, void 0, !0, {
             fileName: "app/components/Kudo.tsx",
             lineNumber: 19,
@@ -1020,7 +1033,7 @@ function SelectBox({
 
 // app/components/SearchBar.tsx
 var import_jsx_dev_runtime12 = require("react/jsx-dev-runtime");
-function SearchBar({ profile: profile2 }) {
+function SearchBar({ profile }) {
   let [searchParams] = (0, import_react7.useSearchParams)(), navigate = (0, import_react7.useNavigate)(), clearFilters = () => {
     searchParams.delete("filter"), searchParams.delete("sort"), navigate("/home");
   };
@@ -1123,7 +1136,23 @@ function SearchBar({ profile: profile2 }) {
       fileName: "app/components/SearchBar.tsx",
       lineNumber: 60,
       columnNumber: 13
-    }, this)
+    }, this),
+    /* @__PURE__ */ (0, import_jsx_dev_runtime12.jsxDEV)(
+      UserCircle,
+      {
+        className: "h-14 w-14 transition duration-300 ease-in-out hover:scale-110 hover:border-2 hover:border-black",
+        profile,
+        onClick: () => navigate("profile")
+      },
+      void 0,
+      !1,
+      {
+        fileName: "app/components/SearchBar.tsx",
+        lineNumber: 61,
+        columnNumber: 17
+      },
+      this
+    )
   ] }, void 0, !0, {
     fileName: "app/components/SearchBar.tsx",
     lineNumber: 22,
@@ -1173,14 +1202,11 @@ function Home() {
           columnNumber: 21
         }, this),
         /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("div", { className: "flex-1 flex", children: [
-          /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("div", { className: "w-full p-10 flex flex-col gap-y-4", children: [
-            console.log(kudos),
-            kudos.map((kudo) => /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)(Kudo, { kudo, profile: kudo.author.profile }, kudo.id, !1, {
-              fileName: "app/routes/home.tsx",
-              lineNumber: 91,
-              columnNumber: 33
-            }, this))
-          ] }, void 0, !0, {
+          /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)("div", { className: "w-full p-10 flex flex-col gap-y-4", children: kudos.map((kudo) => /* @__PURE__ */ (0, import_jsx_dev_runtime13.jsxDEV)(Kudo, { kudo, profile: kudo.author.profile }, kudo.id, !1, {
+            fileName: "app/routes/home.tsx",
+            lineNumber: 91,
+            columnNumber: 33
+          }, this)) }, void 0, !1, {
             fileName: "app/routes/home.tsx",
             lineNumber: 85,
             columnNumber: 25
@@ -1501,19 +1527,201 @@ function KudoModal() {
 // app/routes/home/profile.tsx
 var profile_exports = {};
 __export(profile_exports, {
-  default: () => profile_default
+  action: () => action4,
+  default: () => profile_default,
+  loader: () => loader6
 });
-var import_jsx_dev_runtime16 = require("react/jsx-dev-runtime"), profile = () => /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)("div", { children: "profile" }, void 0, !1, {
-  fileName: "app/routes/home/profile.tsx",
-  lineNumber: 5,
-  columnNumber: 5
-}, this), profile_default = profile;
+var import_react13 = require("react"), import_react14 = require("@remix-run/react"), import_node8 = require("@remix-run/node");
+var import_jsx_dev_runtime16 = require("react/jsx-dev-runtime"), action4 = async ({ request }) => {
+  let userId = await requireUserId(request), form = await request.formData(), firstName = form.get("firstName"), lastName = form.get("lastName"), department = form.get("department");
+  switch (form.get("_action")) {
+    case "save": {
+      if (typeof firstName != "string" || typeof lastName != "string" || typeof department != "string")
+        return (0, import_node8.json)({ error: "Invalid Form Data" }, { status: 400 });
+      let errors = {
+        firstName: validateName(firstName),
+        lastName: validateName(lastName),
+        department: validateName(department)
+      };
+      if (Object.values(errors).some(Boolean))
+        return (0, import_node8.json)(
+          { errors, fields: { department, firstName, lastName } },
+          { status: 400 }
+        );
+      await updateUser(userId, {
+        firstName,
+        lastName,
+        department
+      });
+    }
+    default:
+      return (0, import_node8.json)({ error: "Invalid Form Data" }, { status: 400 });
+  }
+}, loader6 = async ({ request }) => {
+  let user = await getUser(request);
+  return (0, import_node8.json)({ user });
+}, Profile = () => {
+  var _a, _b, _c, _d, _e, _f, _g, _h;
+  let { user } = (0, import_react14.useLoaderData)(), actionData = (0, import_react14.useActionData)(), [formError, setFormError] = (0, import_react13.useState)((actionData == null ? void 0 : actionData.error) || ""), firstLoad = (0, import_react13.useRef)(!0), [formData, setFormData] = (0, import_react13.useState)({
+    firstName: ((_a = actionData == null ? void 0 : actionData.fields) == null ? void 0 : _a.firstName) || ((_b = user == null ? void 0 : user.profile) == null ? void 0 : _b.firstName),
+    lastName: ((_c = actionData == null ? void 0 : actionData.fields) == null ? void 0 : _c.lastName) || ((_d = user == null ? void 0 : user.profile) == null ? void 0 : _d.lastName),
+    department: ((_e = actionData == null ? void 0 : actionData.fields) == null ? void 0 : _e.department) || ((_f = user == null ? void 0 : user.profile) == null ? void 0 : _f.department) || "MARKETING"
+  });
+  (0, import_react13.useEffect)(() => {
+    firstLoad.current || setFormError("");
+  }, [formData]), (0, import_react13.useEffect)(() => {
+    firstLoad.current = !1;
+  }, []);
+  let handleInputChange = (event, field) => {
+    setFormData((form) => ({ ...form, [field]: event.target.value }));
+  };
+  return /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)(Modal, { isOpen: !0, className: "w-1/3", children: /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)("div", { className: "p-3", children: [
+    /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)("h2", { className: "text-4xl font-black text-[#915eff] text-center mb-4", children: "Your Profile" }, void 0, !1, {
+      fileName: "app/routes/home/profile.tsx",
+      lineNumber: 101,
+      columnNumber: 6
+    }, this),
+    /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)("div", { className: "text-xs font-semibold text-center tracking-wide text-red-500 w-full mb-2", children: formError }, void 0, !1, {
+      fileName: "app/routes/home/profile.tsx",
+      lineNumber: 104,
+      columnNumber: 5
+    }, this),
+    /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)("div", { className: "flex", children: [
+      /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)("div", { className: "w-1/3" }, void 0, !1, {
+        fileName: "app/routes/home/profile.tsx",
+        lineNumber: 108,
+        columnNumber: 6
+      }, this),
+      " ",
+      /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)("div", { className: "flex-1", children: /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)("form", { method: "post", children: [
+        /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)(
+          FormField,
+          {
+            htmlFor: "firstName",
+            label: "First Name",
+            placeholder: formData.firstName,
+            value: formData.firstName,
+            onChange: (e) => handleInputChange(e, "firstName"),
+            error: (_g = actionData == null ? void 0 : actionData.errors) == null ? void 0 : _g.firstName
+          },
+          void 0,
+          !1,
+          {
+            fileName: "app/routes/home/profile.tsx",
+            lineNumber: 111,
+            columnNumber: 7
+          },
+          this
+        ),
+        /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)(
+          FormField,
+          {
+            htmlFor: "lastName",
+            label: "Last Name",
+            placeholder: formData.lastName,
+            value: formData.lastName,
+            onChange: (e) => handleInputChange(e, "lastName"),
+            error: (_h = actionData == null ? void 0 : actionData.errors) == null ? void 0 : _h.lastName
+          },
+          void 0,
+          !1,
+          {
+            fileName: "app/routes/home/profile.tsx",
+            lineNumber: 119,
+            columnNumber: 7
+          },
+          this
+        ),
+        /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)(
+          SelectBox,
+          {
+            className: "w-full rounded-xl px-3 py-2 text-gray-400",
+            id: "department",
+            label: "Department",
+            name: "department",
+            options: departments,
+            value: formData.department,
+            onChange: (e) => handleInputChange(e, "department")
+          },
+          void 0,
+          !1,
+          {
+            fileName: "app/routes/home/profile.tsx",
+            lineNumber: 127,
+            columnNumber: 7
+          },
+          this
+        ),
+        /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)("div", { className: "w-full text-right mt-4", children: [
+          /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)(
+            "button",
+            {
+              className: "rounded-xl bg-tertiary font-semibold text-[#915eff] px-16 py-2 transition duration-300 ease-in-out hover:bg-black hover:-translate-y-1",
+              name: "_action",
+              value: "save",
+              children: "Save"
+            },
+            void 0,
+            !1,
+            {
+              fileName: "app/routes/home/profile.tsx",
+              lineNumber: 137,
+              columnNumber: 8
+            },
+            this
+          ),
+          /* @__PURE__ */ (0, import_jsx_dev_runtime16.jsxDEV)(
+            "button",
+            {
+              name: "_action",
+              value: "delete",
+              className: "rounded-xl w-full bg-tertiary font-semibold text-red-700 mt-4 px-16 py-2 transition duration-300 ease-in-out hover:bg-red-400 hover:-translate-y-1",
+              children: "Delete Account"
+            },
+            void 0,
+            !1,
+            {
+              fileName: "app/routes/home/profile.tsx",
+              lineNumber: 144,
+              columnNumber: 8
+            },
+            this
+          )
+        ] }, void 0, !0, {
+          fileName: "app/routes/home/profile.tsx",
+          lineNumber: 136,
+          columnNumber: 7
+        }, this)
+      ] }, void 0, !0, {
+        fileName: "app/routes/home/profile.tsx",
+        lineNumber: 110,
+        columnNumber: 7
+      }, this) }, void 0, !1, {
+        fileName: "app/routes/home/profile.tsx",
+        lineNumber: 109,
+        columnNumber: 6
+      }, this)
+    ] }, void 0, !0, {
+      fileName: "app/routes/home/profile.tsx",
+      lineNumber: 107,
+      columnNumber: 5
+    }, this)
+  ] }, void 0, !0, {
+    fileName: "app/routes/home/profile.tsx",
+    lineNumber: 100,
+    columnNumber: 9
+  }, this) }, void 0, !1, {
+    fileName: "app/routes/home/profile.tsx",
+    lineNumber: 99,
+    columnNumber: 3
+  }, this);
+}, profile_default = Profile;
 
 // server-entry-module:@remix-run/dev/server-build
 var route7 = __toESM(require_test());
 
 // server-assets-manifest:@remix-run/dev/assets-manifest
-var assets_manifest_default = { version: "801aa52d", entry: { module: "/build/entry.client-FO5BZRYQ.js", imports: ["/build/_shared/chunk-GTNGNULT.js", "/build/_shared/chunk-3JQ6X2CB.js", "/build/_shared/chunk-VIPVJV6J.js", "/build/_shared/chunk-5KL4PAQL.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-RJJ5OHML.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/home": { id: "routes/home", parentId: "root", path: "home", index: void 0, caseSensitive: void 0, module: "/build/routes/home-FW6AUNYQ.js", imports: ["/build/_shared/chunk-CAIELZLP.js", "/build/_shared/chunk-UCZWI7OM.js", "/build/_shared/chunk-OZVJ2KGS.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/home/kudo.$userId": { id: "routes/home/kudo.$userId", parentId: "routes/home", path: "kudo/:userId", index: void 0, caseSensitive: void 0, module: "/build/routes/home/kudo.$userId-VH2U64U4.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/home/profile": { id: "routes/home/profile", parentId: "routes/home", path: "profile", index: void 0, caseSensitive: void 0, module: "/build/routes/home/profile-WGV4V4YZ.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/index": { id: "routes/index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/index-LMFH33H2.js", imports: ["/build/_shared/chunk-OZVJ2KGS.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/login": { id: "routes/login", parentId: "root", path: "login", index: void 0, caseSensitive: void 0, module: "/build/routes/login-MEPBRD2Y.js", imports: ["/build/_shared/chunk-CAIELZLP.js", "/build/_shared/chunk-OZVJ2KGS.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/logout": { id: "routes/logout", parentId: "root", path: "logout", index: void 0, caseSensitive: void 0, module: "/build/routes/logout-NVA4EOD7.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/test": { id: "routes/test", parentId: "root", path: "test", index: void 0, caseSensitive: void 0, module: "/build/routes/test-PEMT6OW3.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 } }, cssBundleHref: void 0, hmr: void 0, url: "/build/manifest-801AA52D.js" };
+var assets_manifest_default = { version: "5c2ba2e9", entry: { module: "/build/entry.client-FO5BZRYQ.js", imports: ["/build/_shared/chunk-GTNGNULT.js", "/build/_shared/chunk-3JQ6X2CB.js", "/build/_shared/chunk-VIPVJV6J.js", "/build/_shared/chunk-5KL4PAQL.js"] }, routes: { root: { id: "root", parentId: void 0, path: "", index: void 0, caseSensitive: void 0, module: "/build/root-7H7JCSJY.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/home": { id: "routes/home", parentId: "root", path: "home", index: void 0, caseSensitive: void 0, module: "/build/routes/home-3L6FIWUF.js", imports: ["/build/_shared/chunk-CAIELZLP.js", "/build/_shared/chunk-4TCK6QVN.js", "/build/_shared/chunk-CXVREIGK.js", "/build/_shared/chunk-OZVJ2KGS.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/home/kudo.$userId": { id: "routes/home/kudo.$userId", parentId: "routes/home", path: "kudo/:userId", index: void 0, caseSensitive: void 0, module: "/build/routes/home/kudo.$userId-UQIJQN4D.js", imports: ["/build/_shared/chunk-DNHRC7QT.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/home/profile": { id: "routes/home/profile", parentId: "routes/home", path: "profile", index: void 0, caseSensitive: void 0, module: "/build/routes/home/profile-ASGPTFLH.js", imports: ["/build/_shared/chunk-KBIOEHMZ.js", "/build/_shared/chunk-DNHRC7QT.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/index": { id: "routes/index", parentId: "root", path: void 0, index: !0, caseSensitive: void 0, module: "/build/routes/index-LMFH33H2.js", imports: ["/build/_shared/chunk-OZVJ2KGS.js"], hasAction: !1, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/login": { id: "routes/login", parentId: "root", path: "login", index: void 0, caseSensitive: void 0, module: "/build/routes/login-T3FMF3PV.js", imports: ["/build/_shared/chunk-CAIELZLP.js", "/build/_shared/chunk-KBIOEHMZ.js", "/build/_shared/chunk-OZVJ2KGS.js"], hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/logout": { id: "routes/logout", parentId: "root", path: "logout", index: void 0, caseSensitive: void 0, module: "/build/routes/logout-NVA4EOD7.js", imports: void 0, hasAction: !0, hasLoader: !0, hasCatchBoundary: !1, hasErrorBoundary: !1 }, "routes/test": { id: "routes/test", parentId: "root", path: "test", index: void 0, caseSensitive: void 0, module: "/build/routes/test-PEMT6OW3.js", imports: void 0, hasAction: !1, hasLoader: !1, hasCatchBoundary: !1, hasErrorBoundary: !1 } }, cssBundleHref: void 0, hmr: void 0, url: "/build/manifest-5C2BA2E9.js" };
 
 // server-entry-module:@remix-run/dev/server-build
 var assetsBuildDirectory = "public/build", future = { unstable_cssModules: !1, unstable_cssSideEffectImports: !1, unstable_dev: !1, unstable_postcss: !1, unstable_tailwind: !1, unstable_vanillaExtract: !1, v2_errorBoundary: !0, v2_meta: !0, v2_normalizeFormMethod: !0, v2_routeConvention: !1 }, publicPath = "/build/", entry = { module: entry_server_exports }, routes = {

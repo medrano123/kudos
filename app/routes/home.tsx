@@ -71,7 +71,7 @@ interface KudoWithAuthor extends IKudo {
 }
 
 export default function Home() {
-    const { users, kudos, recentKudos, user,userId } = useLoaderData()
+    const { users, kudos, recentKudos, user, userId } = useLoaderData()
 
 
     return (
@@ -85,7 +85,7 @@ export default function Home() {
                         <div className='w-full p-10 flex flex-col gap-y-4'>
                             {/* recent kudos/feed  */}
 
-                            {console.log(kudos)}
+                            {/* {console.log(kudos)} */}
 
                             {kudos.map((kudo: KudoWithAuthor) => (
                                 <Kudo key={kudo.id} kudo={kudo} profile={kudo.author.profile} />

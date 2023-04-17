@@ -14,9 +14,9 @@ export function SearchBar({ profile }: props) {
     const navigate = useNavigate();
   
     const clearFilters = () => {
-      searchParams.delete("filter");
-      searchParams.delete("sort");
-      navigate("/home");
+        searchParams.delete("filter");
+        searchParams.delete("sort");
+        navigate("/home");
     };
     return (
         <form className='w-full px-6 flex items-center gap-x-4 border-b-4 border-b-blue-900 border-opacity-30 h-20'>
@@ -58,11 +58,11 @@ export function SearchBar({ profile }: props) {
                     </button>
                  )}
             <div className='flex-1' />
-                {/* <UserCircle
-                    className='h-14 w-14 transition duration-300 ease-in-out hover:scale-110 hover:border-2 hover:border-yellow-300'
+                <UserCircle
+                    className='h-14 w-14 transition duration-300 ease-in-out hover:scale-110 hover:border-2 hover:border-black'
                     profile={profile}
                     onClick={() => navigate("profile")}
-                /> */}
+                />
         </form>
     );
 }

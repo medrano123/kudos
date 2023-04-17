@@ -70,9 +70,9 @@ export const getFilteredKudos = async (
           },
         },
       },
-      orderBy: {
-        ...sortFilter,
-      },
+    //   orderBy: {
+    //     ...sortFilter,
+    //   },
     //   where: {
     //     recipientId: userId,
     //     ...whereFilter,
